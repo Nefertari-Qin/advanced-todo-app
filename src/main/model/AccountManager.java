@@ -41,6 +41,7 @@ public class AccountManager {
         accounts.put(userName, signedIn);
     }
 
+    // TODO: aad load() feature later
     // MODIFIES: this
     // EFFECTS: if account with given userName doesn't exist, throw NoSuchAccount exception;
     //          OW if password matches with the account, sign into account and return true;
@@ -56,6 +57,17 @@ public class AccountManager {
             return true;
         }
         return false;
+    }
+
+    // TODO: add save() feature later
+    // MODIFIES: this
+    // EFFECTS: if account is already signed out, throw OutsideAccount exception;
+    //          OW sign out current account (i.e. no account is signed in).
+    public void signOut() throws OutsideAccount {
+        if (signedIn == null) {
+            throw new OutsideAccount();
+        }
+        signedIn = null;
     }
 
     // MODIFIES: this
