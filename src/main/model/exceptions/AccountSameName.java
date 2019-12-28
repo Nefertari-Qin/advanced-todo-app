@@ -1,4 +1,4 @@
 package model.exceptions;
 
-public class AccountSameName extends SameNameException {
+public class AccountSameName extends SameException {
 }

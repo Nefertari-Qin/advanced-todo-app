@@ -1,6 +1,7 @@
 package model;
 
 import model.exceptions.AccountSameName;
+import model.exceptions.AccountSamePassword;
 import model.exceptions.NoSuchAccount;
 import model.exceptions.OutsideAccount;
 
@@ -74,6 +75,27 @@ public class AccountManager {
             accounts.remove(signedIn.getUserName(), signedIn);
             signedIn.setUserName(userName);
             accounts.put(signedIn.getUserName(), signedIn);
+
+            return true;
+        }
+        return false;
+    }
+
+    // MODIFIES: this
+    // EFFECTS: if haven't signed into any account, throw OutsideAccount exception;
+    //          OW if prev password is the same as crnt password, throw AccountSamePassword exception;
+    //             OW if password matches with the account, change prev password to crnt password and return true;
+    //                if password doesn't match, return false.
+    public boolean changePassword(String prev, String crnt) throws OutsideAccount, AccountSamePassword {
+        if (signedIn == null) {
+            throw new OutsideAccount();
+        }
+        if (prev.equals(crnt)) {
+            throw new AccountSamePassword();
+        }
+
+        if (signedIn.isPasswordMatching(prev)) {
+            signedIn.setPassword(crnt);
 
             return true;
         }

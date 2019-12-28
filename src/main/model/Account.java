@@ -14,7 +14,7 @@ public class Account {
     public String getUserName() {
         return userName;
     }
-
+    // TODO: May not need this getter.
     public String getPassword() {
         return password;
     }
