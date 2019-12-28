@@ -9,4 +9,8 @@ public class Account {
         this.userName = userName;
         this.password = password;
     }
+
+    public boolean isPasswordMatching(String password) {
+        return this.password.equals(password);
+    }
 }
