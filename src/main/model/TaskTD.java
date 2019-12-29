@@ -55,6 +55,7 @@ public class TaskTD {
         this.priority = priority;
     }
 
+    // Represent priority of a task in a application.
     public enum Priority {
         N("None"),
         I("!"),
