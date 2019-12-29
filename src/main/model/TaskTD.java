@@ -1,6 +1,7 @@
 package model;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 // Represent a task to do in a application with description, status, creation date, completion date and priority.
 public class TaskTD {
@@ -53,6 +54,31 @@ public class TaskTD {
 
     public void setPriority(Priority priority) {
         this.priority = priority;
+    }
+
+    // EFFECTS: if date now is not before due date, return true;
+    //          OW return false.
+    public boolean isDue() {
+        return !LocalDate.now().isBefore(completion);
+    }
+
+    // Re-define equality for TaskTD:
+    // for any TaskTDs have same description, creation date completion date and priority level,
+    // consider them as the same TaskTD.
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        TaskTD taskTD = (TaskTD) o;
+        return description.equals(taskTD.description)
+                && creation.equals(taskTD.creation)
+                && completion.equals(taskTD.completion)
+                && priority == taskTD.priority;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(description, creation, completion, priority);
     }
 
     // Represent priority of a task in a application.
