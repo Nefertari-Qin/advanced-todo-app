@@ -1,10 +1,11 @@
 package model;
 
 import java.time.LocalDate;
+import java.util.Comparator;
 import java.util.Objects;
 
 // Represent a task to do in a application with description, status, creation date, completion date and priority.
-public class TaskTD {
+public class TaskTD implements Comparable<TaskTD> {
     private String description;
     private boolean isDone;
     private LocalDate creation;
@@ -81,21 +82,75 @@ public class TaskTD {
         return Objects.hash(description, creation, completion, priority);
     }
 
+    // Default comparision behaviour:
+    // Compare TaskTD by its description alphabetically.
+    @Override
+    public int compareTo(TaskTD that) {
+        return this.description.compareTo(that.description);
+    }
+
+    // Extra Comparator:
+    // Compare TaskTD first by its priority level; if have same pLevel, then use default comparision behaviour.
+    class PriorityComparator implements Comparator<TaskTD> {
+
+        @Override
+        public int compare(TaskTD one, TaskTD two) {
+            if (one.priority.level == two.priority.level) {
+                return one.description.compareTo(two.description);
+            } else if (one.priority.level < two.priority.level) {
+                return -1;
+            }
+            return 1;
+        }
+    }
+
+    // Extra Comparator:
+    // Compare TaskTD first by its due date; if have same due date, then use default comparision behaviour.
+    class DueDateComparator implements Comparator<TaskTD> {
+
+        @Override
+        public int compare(TaskTD one, TaskTD two) {
+            if (one.completion.isEqual(two.completion)) {
+                return one.description.compareTo(two.description);
+            }
+            return one.completion.compareTo(two.completion);
+        }
+    }
+
+    // Extra Comparator:
+    // Compare TaskTD first by its creation date; if have same creation date, then use default comparision behaviour.
+    class CreationComparator implements Comparator<TaskTD> {
+
+        @Override
+        public int compare(TaskTD one, TaskTD two) {
+            if (one.creation.isEqual(two.creation)) {
+                return one.creation.compareTo(two.creation);
+            }
+            return one.creation.compareTo(two.creation);
+        }
+    }
+
     // Represent priority of a task in a application.
     public enum Priority {
-        N("None"),
-        I("!"),
-        II("!!"),
-        III("!!!");
+        N("None", 0),
+        I("!", 1),
+        II("!!", 2),
+        III("!!!", 3);
 
         private final String pLabel;
+        private final int level;
 
-        Priority(String pLabel) {
+        Priority(String pLabel, int level) {
             this.pLabel = pLabel;
+            this.level = level;
         }
 
         public String getPriorityLabel() {
             return pLabel;
+        }
+
+        public int getLevel() {
+            return level;
         }
     }
 }
