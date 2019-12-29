@@ -41,7 +41,7 @@ public class TaskTD implements Comparable<TaskTD> {
         return priority;
     }
 
-    public void setDescription(String description) {
+    public void changeDescriptionTo(String description) {
         this.description = description;
     }
 
@@ -49,11 +49,11 @@ public class TaskTD implements Comparable<TaskTD> {
         isDone = true;
     }
 
-    public void setDueDate(LocalDate completion) {
+    public void changeDueDateTo(LocalDate completion) {
         this.completion = completion;
     }
 
-    public void setPriority(Priority priority) {
+    public void changePriorityTo(Priority priority) {
         this.priority = priority;
     }
 
@@ -91,16 +91,16 @@ public class TaskTD implements Comparable<TaskTD> {
 
     // Extra Comparator:
     // Compare TaskTD first by its priority level; if have same pLevel, then use default comparision behaviour.
+    // TaskTD with higher priority comes first (i.e. ascending).
     class PriorityComparator implements Comparator<TaskTD> {
 
         @Override
         public int compare(TaskTD one, TaskTD two) {
             if (one.priority.level == two.priority.level) {
                 return one.description.compareTo(two.description);
-            } else if (one.priority.level < two.priority.level) {
-                return -1;
+            } else {
+                return two.priority.level - one.priority.level;
             }
-            return 1;
         }
     }
 
