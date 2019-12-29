@@ -8,6 +8,7 @@ import model.exceptions.OutsideAccount;
 import java.util.HashMap;
 import java.util.Map;
 
+// Represent a account manager in a application with arb #of accounts.
 public class AccountManager {
     private static AccountManager theManager;
     private Map<String, Account> accounts;
