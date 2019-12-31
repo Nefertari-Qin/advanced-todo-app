@@ -51,9 +51,7 @@ public class AccountManager {
         Account toSignIn = accounts.get(userName);
         if (toSignIn == null) {
             throw new NoSuchAccount();
-        }
-
-        if (toSignIn.isPasswordMatching(password)) {
+        } else if (toSignIn.isPasswordMatching(password)) {
             signedIn = toSignIn;
             return true;
         }
@@ -79,12 +77,9 @@ public class AccountManager {
     public boolean changeUserName(String userName, String password) throws OutsideAccount, AccountSameName {
         if (signedIn == null) {
             throw new OutsideAccount();
-        }
-        if (userName.equals(signedIn.getUserName())) {
+        } else if (userName.equals(signedIn.getUserName())) {
             throw new AccountSameName();
-        }
-
-        if (signedIn.isPasswordMatching(password)) {
+        } else if (signedIn.isPasswordMatching(password)) {
             accounts.remove(signedIn.getUserName(), signedIn);
             signedIn.setUserName(userName);
             accounts.put(signedIn.getUserName(), signedIn);
@@ -102,12 +97,9 @@ public class AccountManager {
     public boolean changePassword(String prev, String crnt) throws OutsideAccount, AccountSamePassword {
         if (signedIn == null) {
             throw new OutsideAccount();
-        }
-        if (prev.equals(crnt)) {
+        } else if (prev.equals(crnt)) {
             throw new AccountSamePassword();
-        }
-
-        if (signedIn.isPasswordMatching(prev)) {
+        } else if (signedIn.isPasswordMatching(prev)) {
             signedIn.setPassword(crnt);
 
             return true;
