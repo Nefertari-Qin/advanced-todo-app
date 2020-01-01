@@ -124,7 +124,7 @@ public class WelcomeFrame extends JFrame {
 
     // Helper: create an accustomed JLabel for "LOGIN" title
     // if no other extra setting is need, merge this little helper
-    // with its caller. TODO
+    // with its caller.
     private JLabel createLoginLabel() {
         JLabel login = new JLabel("<html><font face=\"Arial Black\" size=\"24\" color=\"#999999\">LOGIN</font></html>");
         login.setOpaque(false);
