@@ -25,23 +25,39 @@ public class WelcomeFrame extends JFrame {
     public WelcomeFrame(AccountManager accountManager) {
         this.accountManager = accountManager;
         initializeWelcomePanel();
-        add(welcomePanel, BorderLayout.WEST);
+        //add(welcomePanel, BorderLayout.WEST);
+
+        // Development use:
+        //setLayout(new FlowLayout());
+        //setSize(WF_WIDTH, WF_HEIGHT);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        JPanel background= new JPanel(new BorderLayout());
+        background.setSize(WF_WIDTH, WF_HEIGHT);
+        background.add(welcomePanel, BorderLayout.CENTER);
+        setContentPane(background);
+        pack();
+        setVisible(true);
     }
 
     private void initializeWelcomePanel() {
         welcomePanel = new JPanel();
-        welcomePanel.setSize(WF_WIDTH, WF_HEIGHT);
+        //welcomePanel.setSize(WF_WIDTH, WF_HEIGHT);
         welcomePanel.setLayout(new BoxLayout(welcomePanel, BoxLayout.Y_AXIS));
 
         JLabel login = createLoginLabel();
         initializeUserNameTextField();
         initializePasswordField();
         JButton done = createDoneButton();
+
+        welcomePanel.add(login);
+        welcomePanel.add(userName);
+        welcomePanel.add(password);
+        welcomePanel.add(done);
     }
 
     private JButton createDoneButton() {
         JButton done = new JButton("DONE");
-        done.setFont(new Font(Font.SERIF, Font.BOLD, 20));
+        done.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 20));
         done.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -64,7 +80,7 @@ public class WelcomeFrame extends JFrame {
                 JOptionPane.showMessageDialog(null, errorMessage,
                         "System Error", JOptionPane.ERROR_MESSAGE);
                 //  Reset both text fields
-                userName.setText("");
+                userName.setText("alphanumerical username");
                 password.setText("");
             }
         });
@@ -95,7 +111,7 @@ public class WelcomeFrame extends JFrame {
     }
 
     private void initializeUserNameTextField() {
-        String promptText = "alphanumeric";
+        String promptText = "alphanumerical username";
         userName = new JTextField(20);
         userName.setFont(new Font(Font.SERIF, Font.PLAIN, 20));
 
@@ -127,7 +143,13 @@ public class WelcomeFrame extends JFrame {
     // with its caller.
     private JLabel createLoginLabel() {
         JLabel login = new JLabel("<html><font face=\"Arial Black\" size=\"24\" color=\"#999999\">LOGIN</font></html>");
+        login.setPreferredSize(new Dimension(WF_WIDTH, 50));
         login.setOpaque(false);
         return login;
+    }
+
+
+    public static void main(String[] args) {
+        new WelcomeFrame(AccountManager.getInstance());
     }
 }
